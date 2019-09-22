@@ -1,13 +1,13 @@
 import smtplib
+from email import encoders
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
 
 from config import settings
 
 
-def send_mail(zip_path, zip_name):
+def send_mail(zip_name):
 
     message = MIMEMultipart()
     message['From'] = settings.FROM_ADDRESS
@@ -18,7 +18,7 @@ def send_mail(zip_path, zip_name):
     message.attach(MIMEText(body, 'plain'))
 
     filename = zip_name
-    attachment = open(zip_path + zip_name, "rb")
+    attachment = open(settings.ZIP_PATH + zip_name, "rb")
 
     p = MIMEBase('application', 'octet-stream')
     p.set_payload(attachment.read())
@@ -29,7 +29,7 @@ def send_mail(zip_path, zip_name):
 
     s.starttls()
 
-    s.login(settings.FROM_ADDRESS, settings.EMAIL_PASSWORD )
+    s.login(settings.FROM_ADDRESS, settings.EMAIL_PASSWORD)
 
     text = message.as_string()
     s.sendmail(settings.FROM_ADDRESS, settings.TO_ADDRESS, text)
