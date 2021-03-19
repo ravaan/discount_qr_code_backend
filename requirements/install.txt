@@ -1,6 +1,6 @@
 Django==2.2.13
 django-tastypie==0.14.2
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 pypng==0.0.20
 PyQRCode==1.2.1
 python-dateutil==2.8.0
